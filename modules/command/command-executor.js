@@ -66,7 +66,7 @@ class CommandExecutor {
     async init() {
         await forEach(
             constants.PERMANENT_COMMANDS,
-            async (command) => this._startDefaultCommand(command),
+            async (command) => this.startDefaultCommand(command),
         );
         if (this.verboseLoggingEnabled) {
             this.logger.trace('Command executor has been initialized...');
@@ -205,7 +205,7 @@ class CommandExecutor {
      * @return {Promise<void>}
      * @private
      */
-    async _startDefaultCommand(name) {
+    async startDefaultCommand(name) {
         await CommandExecutor._delete(name);
         const handler = this.commandResolver.resolve(name);
         await this.add(handler.default(), 0, true);

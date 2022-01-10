@@ -40,8 +40,10 @@
     "rc": "^1.2.8"
   },
   "dependencies": {
+    "@ot/auto-updater": "file:../ot-auto-updater",
+    "@ot/auto-updater-1": "file:../ot-auto-updater-1",
+    "@ot/validation-module": "file:../ot-validation-module",
     "app-root-path": "^3.0.0",
-    "auto-git-update": "^2.0.2",
     "awilix": "^5.0.1",
     "axios": "^0.24.0",
     "big-number": "^2.0.0",

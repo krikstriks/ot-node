@@ -1,5 +1,3 @@
-const {execSync} = require('child_process');
-const AutoGitUpdate = require('auto-git-update');
 const pjson = require('./package.json');
 const DependencyInjection = require('./modules/service/dependency-injection');
 const Logger = require('./modules/logger/logger');
@@ -16,13 +14,14 @@ class OTNode {
         this.initialize();
         this.container = this.initializeDependencyContainer();
 
-        await this.initializeAutoUpdate();
-        await this.initializeDataModule();
-        await this.initializeValidationModule();
-        await this.initializeBlockchainModule();
-        await this.initializeNetworkModule();
-        await this.initializeCommandExecutor();
-        await this.initializeRpcModule();
+        //await this.initializeCommandExecutor();
+        await this.initializeAutoUpdaterModule();
+        // await this.initializeDataModule();
+        // await this.initializeValidationModule();
+        // await this.initializeBlockchainModule();
+        // await this.initializeNetworkModule();
+        // await this.initializeCommandExecutor();
+        // await this.initializeRpcModule();
         // await this.initializeWatchdog();
     }
 
@@ -52,29 +51,15 @@ class OTNode {
         return container;
     }
 
-    async initializeAutoUpdate() {
+    async initializeAutoUpdaterModule() {
         try {
-            if (!this.config.autoUpdate.enabled) {
-                return;
-            }
-
-            const autoUpdateConfig = {
-                repository: 'https://github.com/OriginTrail/ot-node',
-                branch: this.config.autoUpdate.branch,
-                tempLocation: this.config.autoUpdate.backupDirectory,
-                executeOnComplete: 'npx sequelize --config=./config/sequelizeConfig.js db:migrate',
-                exitOnComplete: true,
-            };
-
-            execSync(`mkdir -p ${this.config.autoUpdate.backupDirectory}`);
-
-            this.updater = new AutoGitUpdate(autoUpdateConfig);
-            this.updater.setLogConfig({
-                logGeneral: false,
-            });
-            DependencyInjection.registerValue(this.container, 'updater', this.updater);
-
-            this.logger.info('Auto update mechanism initialized');
+            const autoUpdaterManager = this.container.resolve('autoUpdaterManager');
+            const result = autoUpdaterManager.initialize();
+            autoUpdaterManager.executeUpdate();
+            // if (result) {
+            //     const commandExecutor = this.container.resolve('commandExecutor');
+            //     await commandExecutor.startDefaultCommand('otnodeUpdateCommand');
+            // }
         } catch (e) {
             this.logger.error(`Auto update initialization failed. Error message: ${e.message}`);
         }

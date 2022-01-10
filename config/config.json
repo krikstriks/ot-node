@@ -30,6 +30,26 @@
     "telemetryHub": {
       "enabled": false,
       "url": ""
+    },
+    "modules": {
+      "auto_updater": {
+        "enable": true,
+        "npmDependency": "@ot/auto-updater-1",
+        "config": {
+          "branch": "v6/develop",
+          "repository": "https://github.com/OriginTrail/ot-node",
+          "backupDirectory": "../backup"
+        }
+      },
+      "graph_db": {
+        "enable": true,
+        "npmDependency": "ontotex-graph-db",
+        "config": {
+          "branch": "v6/develop",
+          "repository": "https://github.com/OriginTrail/ot-node",
+          "backupDirectory": "../backup"
+        }
+      }
     }
   },
   "testnet": {
@@ -67,7 +87,15 @@
     "telemetryHub": {
       "enabled": true,
       "url": "https://polaris.delta.origin-trail.network/metrics/"
-    }
+    },
+    "modules": {
+      "auto_updater": {
+        "enable": true,
+        "npmDependency": "@ot/auto-updater",
+        "config": {
+          "branch": "v6/develop"
+        }
+      }
   },
   "mainnet": {
     "autoUpdate": {
@@ -91,6 +119,16 @@
     "telemetryHub": {
       "enabled": false,
       "url": ""
-    }
+    },
+    "modules": {
+      "auto_updater": {
+        "enable": true,
+        "name": "AutoUpdater",
+        "npmDependency": "@ot/auto-updater",
+        "config": {
+          "branch": "v6/develop"
+        }
+      }
+    }}
   }
 }

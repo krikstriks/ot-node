@@ -57,6 +57,7 @@ if (!config.blockchain[0].hubContractAddress && config.blockchain[0].networkId =
             telemetryHub: config.telemetryHub,
             logLevel: config.logLevel,
             replicationFactor: 3,
+            modules: config.modules,
         });
         await node.start();
     } catch (e) {

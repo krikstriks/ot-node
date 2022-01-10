@@ -6,7 +6,7 @@ class DependencyInjection {
             injectionMode: awilix.InjectionMode.PROXY,
         });
 
-        container.loadModules(['modules/controller/**/*.js', 'modules/service/**/*.js', 'modules/command/**/*.js'], {
+        container.loadModules(['modules/controller/**/*.js', 'modules/service/**/*.js', 'modules/command/**/*.js', 'modules/manager/**/*.js'], {
             formatName: 'camelCase',
             resolverOptions: {
                 lifetime: awilix.Lifetime.SINGLETON,
@@ -20,6 +20,12 @@ class DependencyInjection {
     static registerValue(container, valueName, value) {
         container.register({
             [valueName]: awilix.asValue(value),
+        });
+    }
+
+    static registerModuleAsSingleton(container, dependencyClass, dependencyName) {
+        container.register({
+            [dependencyName]: awilix.asClass(dependencyClass).singleton(),
         });
     }
 }
